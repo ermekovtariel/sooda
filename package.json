@@ -1,0 +1,34 @@
+{
+  "name": "sooda",
+  "version": "1.0.0",
+  "description": "Sooda",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "socket": "nodemon socket.js",
+    "client": "npm run start --prefix client",
+    "build": "npm run build --prefix client client",
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
+  },
+  "keywords": [
+    "sooda"
+  ],
+  "author": "Ermekov Tariel <ermekovtariel@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.3",
+    "shortid": "^2.2.16",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1"
+  }
+}

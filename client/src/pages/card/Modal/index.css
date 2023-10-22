@@ -1,0 +1,24 @@
+.card_modal_inptes_cards{
+    max-height: 300px;
+    padding-right: 12px;
+    overflow-y: scroll;
+    display: grid;
+    grid-gap: 1rem;
+    padding-top: 14px;
+}
+.card_modal_inptes_cards_box{
+    position: relative;
+    border: 1px solid #1677ff;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+.card_modal_add_inptes_cards_box{
+    display: grid;
+    margin-top: 1rem;
+    grid-gap: 8px;
+}.card_modal_cards_actions{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1rem;
+    margin-top: 1rem;
+}

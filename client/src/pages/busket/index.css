@@ -1,0 +1,37 @@
+.busket_card_edit{
+    cursor: pointer;
+}
+.busket_card_edit > svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #4096ff !important;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 4px;
+}
+.busket_card_edit > svg:hover{
+    background: #fff !important;
+    color: #4096ff;
+    border: 1px solid #4096ff;
+}
+.busket_cards{
+    display: flex;
+    grid-gap: 1rem; 
+    flex-wrap: wrap;
+}
+.busket_item_options{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 4px 1rem;
+}
+.busket_card_actions > svg{
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.busket_item_title{
+    cursor: pointer;
+    display: grid;
+}
+.busket_item_title:hover{
+    color: #4096ff;
+}

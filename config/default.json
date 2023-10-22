@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "mongoUri":"mongodb+srv://ermekovtariel:12tch.12T@cluster0.o673t7a.mongodb.net/bazar?retryWrites=true&w=majority",
+    "jwtSecret": "Tora"
+}

@@ -1,0 +1,32 @@
+            
+.products_box{
+}
+.products_box_actions{
+
+}
+.products_card_params{
+    display: flex;
+    gap: 4px;
+    flex-direction: row-reverse;
+}
+.products_box_items{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+.products_drower_add_form{
+    display: grid;
+    grid-gap: 1rem;
+}
+.ant-upload-list-item-name{
+    max-width: 210px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ant-upload-wrapper{
+    max-height: 150px;
+}

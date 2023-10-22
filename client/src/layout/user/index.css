@@ -1,0 +1,56 @@
+.ant-layout{
+  height: 100vh;
+}
+.ant-layout-header{
+  display: grid;
+  align-items: center;
+}
+.user_layout_header{
+  margin: 0 16px 0px;
+  padding: 1rem 24px;
+  display: flex;
+  justify-content: space-between;
+  max-height: 45px;
+  grid-gap: 1rem;
+}
+.user_layout_header_accounts{
+  display: flex;
+  grid-gap: 1rem;
+  align-items: center;
+}
+.user_layout_header_search{
+  min-width: 37%;
+  display: grid;
+}
+.user_layout_header_block{
+  display: flex;
+  align-items: center;
+  grid-gap: 1rem;
+}
+.blue_button{
+  z-index: 0;
+  color: #4096ff;
+  border-color: #4096ff;
+}
+.user_layout_header_title{
+  font-weight: 800;
+  display: flex;
+  font-size: 30px;
+}
+.user_layout_header_title_icon{
+  margin-bottom: 3px;
+}
+.demo-logo-vertical{
+  height: 60px;
+}
+
+.user_layout_content_box{
+  padding: 24px;
+  min-height: 360px;
+  border-radius:10px;
+}
+
+.ant-menu{
+  height: 100%;
+  overflow-y: scroll;
+}

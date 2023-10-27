@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Badge, Button, Dropdown, Input, Layout, Menu, Skeleton, theme } from 'antd';
+import { Badge, Button, Dropdown, Input, Layout, Menu, theme } from 'antd';
 import { 
     AppstoreOutlined, 
     MessageOutlined, 
@@ -22,6 +22,7 @@ import { getCategories, getCategoryChilds } from '../../store/category/actions';
 import { getSearch, productSearching } from '../../store/product/actions';
 
 import "./index.css";
+import BreadcrumbComponent from '../../components/Breadcrumb';
 
 const { Header, Content, Sider } = Layout;
 
@@ -33,7 +34,7 @@ const Layout_ = ({children}) => {
     const {search} = useLocation()
     const params=Object.fromEntries(new URLSearchParams(search).entries())
     
-    const {isLoading: categoryIsLoading, data:{category}} = useSelector( store => store.product.category )
+    // const {isLoading: categoryIsLoading, data:{category}} = useSelector( store => store.product.category )
     const categories=useSelector(store=>store.categories.data)
     const categoryChilds=useSelector(store=>store.categories.categoryChilds)
     
@@ -191,22 +192,7 @@ const Layout_ = ({children}) => {
         }
     }
 
-    const categoryTitle=useMemo(() => (
-        pathname.split("/")[1]==="category" 
-            ? categoryIsLoading 
-                ? <Skeleton.Input />
-                : prop("name", category) 
-                    && <div 
-                        style={{
-                            padding: "0 24px",
-                            marginBottom: "1rem"
-                        }}
-                    >
-                        {prop("name", category)}
-                    </div>
-            : null
-        ), 
-    [category, categoryIsLoading,  pathname])     
+
 
     return (
         <Layout style={{margin:0}}>
@@ -318,7 +304,7 @@ const Layout_ = ({children}) => {
                       borderRadius:"10px"
                     }}
                 >
-                    {categoryTitle}
+                    <BreadcrumbComponent />
                     <div
                         className="user_layout_content_box"
                         style={{

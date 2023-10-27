@@ -8,9 +8,7 @@
     "server": "nodemon app.js",
     "socket": "nodemon socket.js",
     "client": "npm run start --prefix client",
-    "build": "npm run build --prefix client client",
-    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\"",
-    "deploy": "firebase deploy --only functions:api"
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
   },
   "keywords": [
     "sooda"

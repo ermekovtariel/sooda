@@ -15,7 +15,7 @@ import { logout } from '../../store/auth/actions';
 import PT from "prop-types";
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { isEmpty, prop, trim, uniq } from 'ramda';
+import { isEmpty, prop, trim } from 'ramda';
 import { useHttp } from '../../hooks/http.hook';
 import { getBuskets } from '../../store/busket/actions';
 import { getCategories, getCategoryChilds } from '../../store/category/actions';
@@ -43,7 +43,6 @@ const Layout_ = ({children}) => {
 
     const [collapsed, setCollapsed] = useState(true);
     const [searchInput, setSearchInput] = useState(params.search);
-    const [isOpened, setIsOpened] = useState([]);
 
     const onChangeProfileItem = useCallback(( e ) => {
         setSearchInput("")
@@ -190,7 +189,6 @@ const Layout_ = ({children}) => {
                 console.log(error);
             }
         }
-        setIsOpened(state=>uniq([...state,...arr]))
     }
 
     const categoryTitle=useMemo(() => (

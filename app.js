@@ -3,22 +3,20 @@ const config = require('config')
 const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose')
-const functions = require('firebase-functions')
 
 const app = express()
 app.use(cors());
 
 app.use(express.json({ extended: true }))
 
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/products', require('./routes/product.routes'))
-app.use('/api/containers', require('./routes/container.routes'))
-app.use('/api/busket', require('./routes/busket.routes'))
-app.use('/api/categories', require('./routes/category.routes'))
+app.use('/api/auth', require('./server/routes/auth.routes'))
+app.use('/api/products', require('./server/routes/product.routes'))
+app.use('/api/containers', require('./server/routes/container.routes'))
+app.use('/api/busket', require('./server/routes/busket.routes'))
+app.use('/api/categories', require('./server/routes/category.routes'))
 
-app.use('/chat', require('./routes/chat.routes'))
-app.use('/message', require('./routes/message.routes'))
-
+app.use('/chat', require('./server/routes/chat.routes'))
+app.use('/message', require('./server/routes/message.routes'))
 
 const PORT = config.get('port') || 5000
 
@@ -39,4 +37,3 @@ const start = async () => {
 
 
 start()
-exports.api = functions.https.onRequest(app)

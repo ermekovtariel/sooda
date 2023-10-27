@@ -7,8 +7,8 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "socket": "nodemon socket.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
+    "web": "npm run start --prefix web",
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run web\""
   },
   "keywords": [
     "sooda"

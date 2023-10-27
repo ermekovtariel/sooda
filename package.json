@@ -9,7 +9,8 @@
     "socket": "nodemon socket.js",
     "client": "npm run start --prefix client",
     "build": "npm run build --prefix client client",
-    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\"",
+    "deploy": "firebase deploy --only functions:api"
   },
   "keywords": [
     "sooda"
@@ -22,6 +23,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^4.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.3",
     "shortid": "^2.2.16",

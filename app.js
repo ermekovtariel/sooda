@@ -3,6 +3,7 @@ const config = require('config')
 const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose')
+const functions = require('firebase-functions')
 
 const app = express()
 app.use(cors());
@@ -28,11 +29,14 @@ const start = async () => {
             useUnifiedTopology: true,
         })
         app.listen(PORT, () => console.log(`ПОРТ ${PORT}`))
+
     } catch (e) {
         console.log('Server Error', e.message)
         process.exit(1)
     }
 }
 
-start()
 
+
+start()
+exports.api = functions.https.onRequest(app)

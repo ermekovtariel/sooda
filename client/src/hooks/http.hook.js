@@ -13,7 +13,12 @@ export const useHttp = () => {
                     headers['Content-Type'] = 'application/json';
                 }
 
-                const response = await fetch(`http://localhost:5000${url}`, { method, body, headers });
+
+
+                const response = await fetch(`${process.env.NODE_ENV === "development"
+                        ? "http://localhost:5000"
+                        : "https://bazarda-sooda.web.app"
+                    }${url}`, { method, body, headers });
                 const data = await response.json();
 
                 if (!response.ok) {

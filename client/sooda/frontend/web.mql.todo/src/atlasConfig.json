@@ -1,0 +1,9 @@
+{
+    "appId": "sooda-odgvp",
+    "appUrl": "https://realm.mongodb.com/groups/651487ec621486669581805a/apps/6535ed606bc10dea6b0337d9",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://eu-central-1.aws.realm.mongodb.com",
+    "dataApiBaseUrl": "https://eu-central-1.aws.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/651487ec621486669581805a/explorer/Cluster0/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}

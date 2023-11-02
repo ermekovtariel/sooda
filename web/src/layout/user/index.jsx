@@ -20,9 +20,10 @@ import { useHttp } from '../../hooks/http.hook';
 import { getBuskets } from '../../store/busket/actions';
 import { getCategories, getCategoryChilds } from '../../store/category/actions';
 import { getSearch, productSearching } from '../../store/product/actions';
+import BreadcrumbComponent from '../../components/Breadcrumb';
 
 import "./index.css";
-import BreadcrumbComponent from '../../components/Breadcrumb';
+import styles from "./index.module.scss";
 
 const { Header, Content, Sider } = Layout;
 
@@ -297,16 +298,18 @@ const Layout_ = ({children}) => {
                 </Header>
                 
                 <Content
-                    style={{
-                      margin: '24px 16px 0',
-                      overflowY: "scroll",
-                      maxHeight: "90%",
-                      borderRadius:"10px"
-                    }}
+                    // style={{
+                    //   margin: '24px 16px 0',
+                    //   overflowY: "scroll",
+                    //   maxHeight: "90%",
+                    //   borderRadius:"10px"
+                    // }}
                 >
-                    <BreadcrumbComponent />
+                    <div className={styles.breadcrumbBox}>
+                        <BreadcrumbComponent />
+                    </div>
                     <div
-                        className="user_layout_content_box"
+                        className={styles.userLayoutContentBox}
                         style={{
                             background: colorBgContainer,
                         }}

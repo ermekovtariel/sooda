@@ -27,6 +27,10 @@ const BreadcrumbComponent = () => {
         if(pathname.includes("/profile")){
             setUrls(["/home", pathname])
         }
+        if(pathname.includes("/busket")){
+            setUrls(["/home", pathname])
+        }
+        
         setUrls(state=>uniq([...state, pathname]))
     }, [pathname])
 
@@ -53,6 +57,10 @@ const BreadcrumbComponent = () => {
                 if(item.includes("/containers")){
                     name = `Магазины`
                 }
+                if(item.includes("/busket")){
+                    name = `Корзина`
+                }
+                
                 if(item.includes("/profile")){
                     name = `Профиль`
                 }

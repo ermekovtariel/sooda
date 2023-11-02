@@ -44,11 +44,7 @@
   height: 60px;
 }
 
-.user_layout_content_box{
-  padding: 24px;
-  min-height: 360px;
-  border-radius:10px;
-}
+
 
 .ant-menu{
   height: 100%;

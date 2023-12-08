@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Badge, Button, Dropdown, Input, Layout, Menu, theme } from 'antd';
 import { 
     AppstoreOutlined, 
-    MessageOutlined, 
     SearchOutlined, 
     ShoppingCartOutlined, 
     ShoppingOutlined, 
@@ -208,7 +207,6 @@ const Layout_ = ({children}) => {
                     selectedKeys={defaultSelectedKeys}
                     onSelect={onChangeMenuItem}
                     mode="inline" 
-                    // items={items} 
                     onOpenChange={expandedCategory}
                     items={categories.map(item=>{
                         if(prop("children", item) && prop("hasChildren", item)){
@@ -246,6 +244,7 @@ const Layout_ = ({children}) => {
                             <Link
                                 to={"/home"}
                                 style={{ color: colorPrimary }}
+                                id='logo'
                                 className='user_layout_header_title'
                                 onClick={()=>setCollapsed(true)}
                             >
@@ -284,27 +283,11 @@ const Layout_ = ({children}) => {
                                     />
                                 </Badge>
                             </Link>
-                            <Link to="/chat">
-                                <Badge count={busketCount}>
-                                    <Button 
-                                        icon={<MessageOutlined />} 
-                                        size={"large"} 
-                                    />
-                                </Badge>
-                            </Link>
-                            
                         </div>
                     </div>
                 </Header>
                 
-                <Content
-                    // style={{
-                    //   margin: '24px 16px 0',
-                    //   overflowY: "scroll",
-                    //   maxHeight: "90%",
-                    //   borderRadius:"10px"
-                    // }}
-                >
+                <Content>
                     <div className={styles.breadcrumbBox}>
                         <BreadcrumbComponent />
                     </div>

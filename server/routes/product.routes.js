@@ -52,8 +52,29 @@ router.get("/search", async (req, res) => {
         const searchQuery = req.query.q;
 
         const products = await Product.find({
-            name: { $regex: searchQuery, $options: "i" },
-            owner: { $ne: req?.user?.userId },
+            $or:
+                [
+                    {
+                        name: { $regex: searchQuery, $options: "i" },
+                        owner: { $ne: req?.user?.userId },
+                    },
+                    {
+                        description: { $regex: searchQuery, $options: "i" },
+                        owner: { $ne: req?.user?.userId },
+                    },
+                    {
+                        colors: { $regex: searchQuery, $options: "i" },
+                        owner: { $ne: req?.user?.userId },
+                    },
+                    {
+                        sizes: { $regex: searchQuery, $options: "i" },
+                        owner: { $ne: req?.user?.userId },
+                    },
+                    {
+                        category: { $value: { $regex: searchQuery, $options: "i" } },
+                        owner: { $ne: req?.user?.userId },
+                    }
+                ]
         });
 
         res.json(products);

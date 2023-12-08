@@ -10,7 +10,6 @@ import { prop } from "ramda";
 const { TextArea } = Input;
 
 const ChangeCardDrower = ({isOpen, onCloseDrower}) => {
-
     const { request } = useHttp();
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +58,21 @@ const ChangeCardDrower = ({isOpen, onCloseDrower}) => {
                 {...form},
                 {Authorization: localStorage.getItem("token")}
             );
+
+            if(form.price!==product.price){
+                const changedData = await request(
+                    `/api/price/change-price/`, 
+                    'POST',
+                    {
+                        product:product._id,
+                        price: form.price,
+                    },
+                    {Authorization: localStorage.getItem("token")}
+                );
+                console.log(changedData);
+            }
+            
+
             dispatch(getOneCard(changedData))
         } catch (error) {
             console.log(error);

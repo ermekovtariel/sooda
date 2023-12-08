@@ -9,18 +9,32 @@ const noneImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAAD
 
 const formatedDate = (data) => moment(data).local().format('DD.MM.YYYY')
 
-const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+const getBase64 = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    const data = new Promise((resolve, reject) => {
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     });
-
+    return data
+}
 const defaultText = (str) => {
     const firstChar = str.charAt(0).toUpperCase();
     const restOfStr = str.slice(1).toLowerCase();
     return firstChar + restOfStr;
+}
+
+const getDatesInRange = (date_from, date_to) => {
+    const startDate = new Date(date_from);
+    const endDate = new Date(date_to);
+    const datesArray = [];
+
+    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        datesArray.push(formatedDate(new Date(date)));
+    }
+
+    return datesArray;
 }
 
 export {
@@ -28,5 +42,6 @@ export {
     getBase64,
     noneImage,
     isMobile,
-    formatedDate
+    formatedDate,
+    getDatesInRange
 }

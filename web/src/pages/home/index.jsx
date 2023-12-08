@@ -97,8 +97,12 @@ const Home = () => {
                         </Card>
                     )
                     : (trim(propOr("", "search", searchParam))?searchData:data).map(({_id:id, owner, count,price, name, image})=>(
-                        <Card
+                        <a 
                             key={id}
+                            href="#logo"
+                        >
+                        <Card
+                            
                             hoverable
                             style={{ width: 240 }}
                             onMouseEnter={()=>owner!==JSON.parse(localStorage.getItem("user")).id&&setHover(id)}
@@ -136,6 +140,7 @@ const Home = () => {
                             } 
                            />
                         </Card>
+                        </a>
                     ))
                 }
                 </div>

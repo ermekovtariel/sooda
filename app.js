@@ -14,6 +14,7 @@ app.use('/api/products', require('./server/routes/product.routes'))
 app.use('/api/containers', require('./server/routes/container.routes'))
 app.use('/api/busket', require('./server/routes/busket.routes'))
 app.use('/api/categories', require('./server/routes/category.routes'))
+app.use('/api/price', require('./server/routes/price.routes'))
 
 app.use('/chat', require('./server/routes/chat.routes'))
 app.use('/message', require('./server/routes/message.routes'))

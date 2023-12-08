@@ -1,9 +1,9 @@
-import { Button, Card, Drawer, Input, Modal, Result, Select, Upload } from "antd"
+import { Button, Card, Drawer, Image, Input, Modal, Result, Select, Spin, Upload } from "antd"
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty, prop } from "ramda";
+import { filter, includes, isEmpty, prop } from "ramda";
 
 import { addOwnProduct, deleteOwnProduct, getOwnProducts } from "../../store/product/actions";
 import { useHttp } from "../../hooks/http.hook";
@@ -79,17 +79,19 @@ const Products = () => {
     const setDescriptionValue=({target})=>setForm(state=>({...state, description:target.value}))
 
     const handleCancel = () => setPreviewOpen(false);
-    const handlePreview = async (file) => {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj);
-      }
-      setPreviewImage(file.url || file.preview);
-      setPreviewOpen(true);
-      setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-    };
-    const handleChange = ({ fileList: newFileList }) => {
-        setFileList(newFileList.map(item=>({...item, status:"success"})))
-    }
+    // const handlePreview = async (file) => {
+    //   if (!file.url && !file.preview) {
+    //     file.preview = await getBase64(file.originFileObj);
+    //   }
+    //   setPreviewImage(file.url || file.preview);
+    //   setPreviewOpen(true);
+    //   setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    // };
+    // const handleChange = ({ fileList: newFileList }) => {
+    //     setFileList(
+            
+    //         )
+    // }
 
     const fetchProducts = useCallback(async () => {
         try {
@@ -132,7 +134,7 @@ const Products = () => {
                 'POST',
                 {   
                     ...form,
-                    image: fileList.map(({thumbUrl})=>thumbUrl)
+                    image: fileList
                 },   
                 {Authorization: localStorage.getItem("token")}
             )
@@ -300,16 +302,35 @@ const Products = () => {
                         }))
                     }
                     />
-                    <Upload
-                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                        listType="picture-card"
-                        accept={"image/jpeg, image/png, image/jpg"}
+                    <Upload.Dragger
+                        action="http://localhost:5173/"
+                        listType="picture"
+                        showUploadList={{showRemoveIcon:true}}
+                        accept={".jpeg, .png, .jpg"}
+                        multiple
                         fileList={fileList}
-                        onPreview={handlePreview}
-                        onChange={handleChange}
+                        beforeUpload={async f =>{
+                            const i=await getBase64(f)
+                            setFileList(state=>state.includes(i)?state.filter(item=>item!==i): [...state, i])
+                            return f
+                        }}
+                        defaultFileList={[{
+                            uid:"abc",
+                            name:"exising_file.png",
+                            percent:50,
+                            url:"https://www.google.com/"
+                        }]}
+                        iconRender={(i)=><Image src={i} alt="awd" />}
+                        
+                        progress={{
+                            strokeWidth:3,
+                            style:{
+                                top:12
+                            }
+                        }}
                     >
-                        {fileList.length >= 5 ? null : uploadButton}
-                    </Upload>
+                        <Button>Click</Button>
+                    </Upload.Dragger>
                     <Button 
                         type="primary" 
                         disabled={

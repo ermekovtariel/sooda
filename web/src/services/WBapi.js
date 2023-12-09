@@ -1,4 +1,5 @@
-import {createApi} from "@reduxjs/toolkit/dist/query/react"
+// import {createApi} from "@reduxjs/toolkit/dist/query/react"
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 // import API from "root/js/api"
 
@@ -8,16 +9,16 @@ import apiFunctions from "./apiFunctions"
 
 const WBAPIBaseQuery =
 	() =>
-	async ({params}) => {
-		try {
-			return {params}
-		} catch (error) {
-			console.log({error})
-			return {
-				error,
+		async ({ params }) => {
+			try {
+				return { params }
+			} catch (error) {
+				console.log({ error })
+				return {
+					error,
+				}
 			}
 		}
-	}
 
 export const WBapi = createApi({
 	reducerPath: "WBAPI",
@@ -25,7 +26,7 @@ export const WBapi = createApi({
 	tagTypes: ["Data"],
 	endpoints: build => ({
 		getData: build.query({
-			query: ({params}) => ({apiMethod: apiFunctions.getData, params}),
+			query: ({ params }) => ({ apiMethod: apiFunctions.getData, params }),
 			providesTags: () => ["Data"],
 		})
 	}),

@@ -116,7 +116,7 @@ const Busket=()=> {
         status="404"
         title="Пусто"
         subTitle="У вас нет в корзине продуктов..."
-        extra={<Button onClick={()=>navigate("/home")} type="primary">Перейти на главную страницу</Button>}
+        extra={<Button onClick={()=>navigate("/")} type="primary">Перейти на главную страницу</Button>}
     />
     )
     :(

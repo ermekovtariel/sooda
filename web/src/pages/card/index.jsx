@@ -1,7 +1,7 @@
 import { HappyProvider } from '@ant-design/happy-work-theme';
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Image, Skeleton, Typography } from "antd";
 import { isEmpty, isNil, length, prop, propOr } from "ramda";
 
@@ -17,7 +17,7 @@ import PriceChart from './PriceChart';
 
 
 const CardPage = () => {
-    const {productId} = useParams()
+    const { productId } = useParams()
     const { request, loading } = useHttp();
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -31,6 +31,7 @@ const CardPage = () => {
         modal: false,
         buy: {}
     })
+
 
     const fetchData = useCallback(async () => {
         try {
@@ -289,6 +290,20 @@ const CardPage = () => {
                         }
                     </div>
                     <PriceChart />
+                   {prop("name", prop("container", product))&& <Link 
+                        to={
+                            `/container/${
+                                prop("id", prop("container", product))
+                            }/${
+                                prop("name", prop("container", product))
+                            }/products`
+                        } 
+                        className={styles.brand}
+                    >
+                        <b>
+                            {propOr(null, "name", prop("container", product))}
+                        </b>
+                    </Link>}
                 
                 </div>
                 <Modal 

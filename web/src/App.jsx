@@ -38,8 +38,8 @@ const pathes=[
     component: <Profile />,
   },
   {
-    path: "/home",
-    dataKey: "/home",
+    path: "/",
+    dataKey: "/",
     component: <Home />,
   },
   {
@@ -48,7 +48,7 @@ const pathes=[
     component: <Containers />,
   },
   {
-    path: "/container/:id/products",
+    path: "/container/:id/:name/products",
     dataKey: "/products",
     component: <Products />,
   },
@@ -86,22 +86,22 @@ const App = () => {
   const authStore = useSelector(store=>store.auth)
 
   useEffect(() => {
-    if(isNil(propOr(null, "token", authStore))){
-      if(pathname==="/registration"){
-        return 
-      }
-      if(pathname==="/login"){
-        return 
-      }
-      return navigate("/login")
-    }
+    // if(isNil(propOr(null, "token", authStore))){
+    //   if(pathname==="/registration"){
+    //     return 
+    //   }
+    //   if(pathname==="/login"){
+    //     return 
+    //   }
+    //   return navigate("/login")
+    // }
 
     const valid = pathes
       .map(({dataKey})=>dataKey)
         .some(item=>pathname.includes(item))
 
     if(!valid){
-      navigate("/home")
+      navigate("/")
     }
   }, [navigate, pathname, authStore]);
 
@@ -111,7 +111,7 @@ const App = () => {
       &&
       !isNil(propOr(null, "token", authStore))
     ){
-      navigate("/home")
+      navigate("/")
     } 
   }, [authStore, navigate, pathname]);
 

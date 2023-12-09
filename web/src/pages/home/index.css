@@ -1,6 +1,9 @@
 .home_page_cards_box{
     margin-top: 1rem;
+    place-content: center;
     display: flex;
+    /* height: 100%; */
+    overflow-y: scroll;
     flex-wrap: wrap;
     gap: 1rem;
 }

@@ -14,7 +14,6 @@ router.get("/", auth, async (req, res) => {
 })
 router.get("/product-create-halper", auth, async (req, res) => {
     try {
-
         const categories = await Category.find({ parent: { $ne: null } })
         res.json(categories)
     } catch (e) {

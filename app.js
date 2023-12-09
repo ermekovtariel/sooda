@@ -1,13 +1,22 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const config = require('config')
 const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose')
 
 const app = express()
+
+app.use(bodyParser.json({ limit: '10000mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '10000mb', extended: true }));
+
 app.use(cors());
 
+
+
 app.use(express.json({ extended: true }))
+
+
 
 app.use('/api/auth', require('./server/routes/auth.routes'))
 app.use('/api/products', require('./server/routes/product.routes'))

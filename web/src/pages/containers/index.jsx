@@ -72,8 +72,6 @@ const Containers=()=> {
         fetchData()
     }, [fetchData]);
 
-
-
     const onDelete=async(id)=>{
         try {
             setIsLoading(true)
@@ -90,7 +88,6 @@ const Containers=()=> {
         setIsLoading(false)
     }
     
-
     const containersComponent= isLoading
    ? loadingArray.map((_, index)=><Skeleton key={`conteiner-loading-${index}`} avatar paragraph={{ rows: 4 }} />)
    : (
@@ -107,7 +104,7 @@ const Containers=()=> {
                        key={`${_id}`+index}
                    >
                        <div 
-                           onClick={()=>navigate(`/container/${_id}/products`)} 
+                           onClick={()=>navigate(`/container/${_id}/${name}/products`)} 
                            className="conteiner_box pointer"
                        >
                            <div className="conteiner_icon">

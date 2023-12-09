@@ -95,7 +95,7 @@ const Layout_ = ({children}) => {
     const onSearch= async ({target}) => {
         const {value} = target
         if(trim(value)){
-           navigate(`/home?search=${value}`)
+           navigate(`/?search=${value}`)
            setCollapsed(true)
 
            try {
@@ -114,7 +114,7 @@ const Layout_ = ({children}) => {
             dispatch(productSearching(false))
            return 
         }
-        navigate(`/home`)
+        navigate(`/`)
 
      
     }
@@ -235,7 +235,7 @@ const Layout_ = ({children}) => {
                                 size={"large"} 
                             />}
                             <Link
-                                to={"/home"}
+                                to={"/"}
                                 style={{ color: colorPrimary }}
                                 className='user_layout_header_title'
                                 onClick={()=>setCollapsed(true)}

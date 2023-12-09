@@ -9,26 +9,26 @@ import { useSelector } from 'react-redux';
 const BreadcrumbComponent = () => {
     const {pathname} = useLocation()
     const categoryChilds = useSelector(store=>store.categories.categoryChilds)
-    const [urls, setUrls] = useState(["/home"])
+    const [urls, setUrls] = useState(["/"])
 
     useEffect(() => {
-        if(pathname === "/home"){
-            return setUrls(["/home"])
+        if(pathname === "/"){
+            return setUrls(["/"])
         }
         if(pathname.includes("/category")){
-            setUrls(["/home", pathname])
+            setUrls(["/", pathname])
         }
         if(pathname.includes("/busket")){
-            setUrls(["/home", pathname])
+            setUrls(["/", pathname])
         }
         if(pathname.includes("/containers")){
-            setUrls(["/home", pathname])
+            setUrls(["/", pathname])
         }
         if(pathname.includes("/profile")){
-            setUrls(["/home", pathname])
+            setUrls(["/", pathname])
         }
         if(pathname.includes("/busket")){
-            setUrls(["/home", pathname])
+            setUrls(["/", pathname])
         }
         
         setUrls(state=>uniq([...state, pathname]))
@@ -43,7 +43,7 @@ const BreadcrumbComponent = () => {
                 if(item.includes("/card")){
                     name = `Артикул ${item.split("/").filter(item=>item)[1]}`
                 }
-                if(item.includes("/home")){
+                if(item.includes("/")){
                     name = `Главная`
                 }
                 if(item.includes("/category")){

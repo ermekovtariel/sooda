@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Badge, Button, Dropdown, Input, Layout, Menu, theme } from 'antd';
+import { Badge, Button, Drawer, Dropdown, Input, Layout, Menu, theme } from 'antd';
 import { 
     AppstoreOutlined, 
     SearchOutlined, 
@@ -14,7 +14,7 @@ import { logout } from '../../store/auth/actions';
 import PT from "prop-types";
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { isEmpty, prop, trim } from 'ramda';
+import { isEmpty, isNil, prop, propOr, trim } from 'ramda';
 import { useHttp } from '../../hooks/http.hook';
 import { getBuskets } from '../../store/busket/actions';
 import { getCategories, getCategoryChilds } from '../../store/category/actions';
@@ -33,7 +33,7 @@ const Layout_ = ({children}) => {
     const {pathname} = useLocation()
     const {search} = useLocation()
     const params=Object.fromEntries(new URLSearchParams(search).entries())
-    
+    const authStore = useSelector(store=>store.auth)
     // const {isLoading: categoryIsLoading, data:{category}} = useSelector( store => store.product.category )
     const categories=useSelector(store=>store.categories.data)
     const categoryChilds=useSelector(store=>store.categories.categoryChilds)
@@ -43,6 +43,8 @@ const Layout_ = ({children}) => {
     const busketCount = useSelector(store=>store.busket.count)
 
     const [collapsed, setCollapsed] = useState(true);
+    const [open, setOpen] = useState({parent:false, child:false});
+    console.log(open);
     const [searchInput, setSearchInput] = useState(params.search);
 
     const onChangeProfileItem = useCallback(( e ) => {
@@ -50,7 +52,17 @@ const Layout_ = ({children}) => {
         navigate(e)
     }, [navigate])
 
-    const profileItem = useMemo(() =>  [
+    const profileItem = useMemo(() =>  isNil(propOr(null, "token", authStore))
+    ? [
+        {
+            key: 'exit_button',
+            label: isNil(propOr(null, "token", authStore))
+            ? <div onClick={()=>navigate("/login")}>Войти</div>
+            :(
+              <div onClick={()=>dispatch(logout())}> Выход </div>
+            ),
+        },
+    ]:[
             {
                 key: 'products',
                 label: (<div onClick={()=>onChangeProfileItem("/containers")}> Магазин </div>),
@@ -63,12 +75,14 @@ const Layout_ = ({children}) => {
             },
             {
                 key: 'exit_button',
-                label: (
+                label: isNil(propOr(null, "token", authStore))
+                ? <div onClick={()=>navigate("/login")}>Войти</div>
+                :(
                   <div onClick={()=>dispatch(logout())}> Выход </div>
                 ),
             },
         ], 
-        [ onChangeProfileItem, dispatch]
+        [authStore, onChangeProfileItem, navigate, dispatch]
     )
 
     const {
@@ -81,7 +95,7 @@ const Layout_ = ({children}) => {
     const onSearch= async ({target}) => {
         const {value} = target
         if(trim(value)){
-           navigate(`/home?search=${value}`)
+           navigate(`/?search=${value}`)
            setCollapsed(true)
 
            try {
@@ -100,7 +114,7 @@ const Layout_ = ({children}) => {
             dispatch(productSearching(false))
            return 
         }
-        navigate(`/home`)
+        navigate(`/`)
 
      
     }
@@ -196,53 +210,27 @@ const Layout_ = ({children}) => {
 
     return (
         <Layout style={{margin:0}}>
-            <Sider
-                collapsed={collapsed} 
-                onCollapse={(value) => setCollapsed(value)}
-                collapsedWidth="0"
-                breakpoint={isMobile && "xxl"}
-            >
-                <Menu 
-                    defaultSelectedKeys={defaultSelectedKeys} 
-                    selectedKeys={defaultSelectedKeys}
-                    onSelect={onChangeMenuItem}
-                    mode="inline" 
-                    onOpenChange={expandedCategory}
-                    items={categories.map(item=>{
-                        if(prop("children", item) && prop("hasChildren", item)){
-                            return ({
-                                key: item._id, 
-                                children:  item.children.map(item=>({
-                                        key:item._id, 
-                                        label:item.name,
-                                    })), 
-                                label: item.name,
-                            })
-                        }
-                        return ({
-                            key: item._id, 
-                            label: item.name,
-                        })
-                    })} 
-                />
-            </Sider>
-            <Layout>
+            <Layout style={{overflowY:"scroll"}}>
                 <Header
                     style={{
                         padding: 0,
                         background: colorBgContainer,
+                        position:"sticky",
+                        top:"0",
+                        right:"0",
+                        zIndex:10
                     }}
                 >
                     <div className='user_layout_header'>
                         <div className='user_layout_header_block'>
                             {!isMobile && <Button 
                                 className='blue_button'
-                                onClick={() => setCollapsed(state=>!state)}
+                                onClick={()=>setOpen(state=>({...state, parent:true}))}
                                 icon={<AppstoreOutlined />} 
                                 size={"large"} 
                             />}
                             <Link
-                                to={"/home"}
+                                to={"/"}
                                 style={{ color: colorPrimary }}
                                 id='logo'
                                 className='user_layout_header_title'
@@ -299,8 +287,32 @@ const Layout_ = ({children}) => {
                     >
                         {children} 
                     </div>
+                    <div style={{height:"10px"}}/>
                 </Content>
+                <Drawer
+                  title={`Категории`}
+                  placement="left"
+                  
+                  size={"default"}
+                  onClose={()=>setOpen(state=>({...state, parent:false}))}
+                  open={open.parent}
+                >
+                        
+                    <Button onClick={()=>setOpen(state=>({...state, child:true}))}>
+                        awd
+                    </Button>
+                    <Drawer
+                      title={`Подкатегории`}
+                      placement="left"
+                      size={"large"}
+                      onClose={()=>setOpen(state=>({...state, child:false}))}
+                      open={open.child}
+                    >
+                        dawdwa
+                    </Drawer>
+                </Drawer>
             </Layout>
+            
         </Layout>
     )
 }

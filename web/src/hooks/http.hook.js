@@ -11,13 +11,14 @@ export const useHttp = () => {
                 if (body) {
                     body = JSON.stringify(body);
                     headers['Content-Type'] = 'application/json';
+                    headers['User-agent'] = 'learning app';
                 }
 
 
 
                 const response = await fetch(`${process.env.NODE_ENV === "development"
-                        ? "http://localhost:5000"
-                        : "https://bazarda-sooda.web.app"
+                    ? "http://localhost:5000"
+                    : "https://sooda.web.app"
                     }${url}`, { method, body, headers });
                 const data = await response.json();
 

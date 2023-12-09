@@ -1,9 +1,9 @@
-import { Button, Card, Drawer, Image, Input, Modal, Result, Select, Spin, Upload } from "antd"
+import { Button, Card, Drawer, Image, Input, Modal, Result, Select, Upload } from "antd"
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { filter, includes, isEmpty, prop } from "ramda";
+import { isEmpty, prop } from "ramda";
 
 import { addOwnProduct, deleteOwnProduct, getOwnProducts } from "../../store/product/actions";
 import { useHttp } from "../../hooks/http.hook";
@@ -18,17 +18,11 @@ import { getProductCategories } from "../../store/category/actions";
 const { TextArea } = Input;
 const { Meta } = Card;
 const arrayLoadingCards=[1,2,3,4,5,6,7,8,9,10]
-const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-);
 
 const Products = () => {
     const navigate = useNavigate()
     const { request } = useHttp();
-    const {id:containerId}=useParams()
+    const { id: containerId, name: containerName } = useParams()
     const dispatch = useDispatch()
 
     const products = useSelector(store=>store.product.ownProducts.data)
@@ -39,11 +33,14 @@ const Products = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([]);
-    // const [categories, setCategories] = useState([]);
+
     const [form, setForm] = useState({
         name:"",
         price: null,
-        container:containerId, 
+        container: {
+            id: containerId,
+            name: containerName
+        }, 
         count: null,
         description: "",
         isOpen: false,
@@ -141,6 +138,7 @@ const Products = () => {
             dispatch(addOwnProduct(product))
         } catch (error) {
             console.log(error);
+            return error
         }
         // resetData()
         setisLoading(false)
@@ -192,7 +190,7 @@ const Products = () => {
                           <Meta title={item} description={item} />
                         </Card>
                     )
-                    : products.map(({_id:id, count, name, image, price})=>(
+                    : products.map(({_id:id, count, name,owner, image, price})=>(
                         <Card
                             key={id}
                             hoverable
@@ -211,9 +209,11 @@ const Products = () => {
                                     } 
                                 />
                             }
-                            actions={[
-                                <DeleteOutlined onClick={()=>onDeleteProduct(id)} key="setting" />,
-                              ]}
+                            actions={
+                                owner===prop("id", JSON.parse(localStorage.getItem("user")))?[
+                                <DeleteOutlined onClick={()=>onDeleteProduct(id)} key="setting" />
+                              ]:[]
+                            }
                             
                         >
                             <Meta 
@@ -242,6 +242,22 @@ const Products = () => {
                 placement="right" 
                 onClose={onDrowerClose} 
                 open={form.isOpen}
+                extra={
+                    <Button 
+                    type="primary" 
+                    disabled={
+                        !form.count||
+                        !form.name||
+                        !form.price||
+                        !form.description||
+                        isEmpty(fileList)
+                    }
+                    icon={<PlusOutlined />}
+                    onClick={addProduct}
+                >
+                    Добавить
+                </Button>
+                }
             >
                 <div className="products_drower_add_form">
                     <Input 
@@ -309,15 +325,17 @@ const Products = () => {
                         accept={".jpeg, .png, .jpg"}
                         multiple
                         fileList={fileList}
+                        onRemove={e=>setFileList(s=>s.filter(item=>item!==e))}
                         beforeUpload={async f =>{
                             const i=await getBase64(f)
-                            setFileList(state=>state.includes(i)?state.filter(item=>item!==i): [...state, i])
+                            setFileList(state=>[...state, (String(i))])
                             return f
                         }}
                         defaultFileList={[{
                             uid:"abc",
                             name:"exising_file.png",
                             percent:50,
+                            status: "done",
                             url:"https://www.google.com/"
                         }]}
                         iconRender={(i)=><Image src={i} alt="awd" />}
@@ -331,20 +349,7 @@ const Products = () => {
                     >
                         <Button>Click</Button>
                     </Upload.Dragger>
-                    <Button 
-                        type="primary" 
-                        disabled={
-                            !form.count||
-                            !form.name||
-                            !form.price||
-                            !form.description||
-                            isEmpty(fileList)
-                        }
-                        icon={<PlusOutlined />}
-                        onClick={addProduct}
-                    >
-                        Добавить
-                    </Button>
+              
                 </div>
             </Drawer>
             <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
